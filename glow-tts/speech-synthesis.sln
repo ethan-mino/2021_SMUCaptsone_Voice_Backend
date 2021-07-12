@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "speech-synthesis", "speech-synthesis.pyproj", "{942575AE-4819-4831-BA7E-B43AFDDD01E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{942575AE-4819-4831-BA7E-B43AFDDD01E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942575AE-4819-4831-BA7E-B43AFDDD01E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B62EBEE2-D66A-4CC5-BEE7-8FD72724F753}
+	EndGlobalSection
+EndGlobal
