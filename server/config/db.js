@@ -1,11 +1,11 @@
 const mysql = require('mysql')
 
 const db = mysql.createConnection({
-    // aws 용 
+    // aws 용 - 톡방에 비밀번호와 user 남기겠습니다.
     // host: 'urvoice.cir16abmh0e7.us-east-2.rds.amazonaws.com',
-    // user: 'admin',
-    // password: 'teamproject',
-    // port: 3307,
+    // user: '',
+    // password: '',
+    // port: ,
     // database: 'urvoice'
 
     // local test 용 - heejin

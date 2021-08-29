@@ -6,9 +6,11 @@ const db = require('../config/db')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
-router.get('/signup', (req, res) => {
-    res.render('signup.ejs')
-})
+// 보기 쉽게 ejs 를 이용해 확인하느라 생성 - 필요 없음
+// router.get('/signup', (req, res) => {
+//     res.render('signup.ejs')
+// })
+
 // 회원가입
 router.post('/signup', (req, res) => {
     var param = [req.body.id, req.body.password]
