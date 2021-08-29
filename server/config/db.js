@@ -17,4 +17,12 @@ const db = mysql.createConnection({
 })
 
 db.connect();
+
+// MySQL Terminal -> DB 생성 create table
+// CREATE TABLE urvoice (
+//     id varchar(50) NOT NULL,
+//     password varchar(100) NOT NULL,
+//     PRIMARY KEY (id)
+// );
+
 module.exports = db;
