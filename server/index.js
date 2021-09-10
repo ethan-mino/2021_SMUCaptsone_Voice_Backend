@@ -6,7 +6,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const db = require('./config/db')
 const path = require('path');
-const port = process.env.PORT || 3350
+const port = 8080
 
 app.use(bodyParser.urlencoded({
     extended: false
