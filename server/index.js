@@ -6,7 +6,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const db = require('./config/db')
 const path = require('path');
-const port = process.env.PORT || 3350
+const port = 8080
 
 app.use(bodyParser.urlencoded({
     extended: false
@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 
 // 쿠키 추출
 app.use(cookieParser())
+
+
+app.set('view engine', 'ejs'); //'ejs'탬플릿을 엔진으로 한다.
+app.set('views', path.join(__dirname, 'views')); //폴더, 폴더경로 지정
 
 app.use(session({
     key: "user", // 저장될 키 값
@@ -33,14 +37,13 @@ app.use(express.static(__dirname + '/public'))
 app.use("/api", require('./routes/main'))
 app.use("/api", require('./routes/signup'))
 app.use("/api", require('./routes/login'))
+app.use("/api/diary", require('./routes/diary'))
+
+app.use('/save', express.static(path.join(__dirname, 'assests/save')));
 
 app.listen(port, () => {
     console.log(`Server Listening on ${port}`)
 });
-
-
-// app.set('view engine', 'ejs'); //'ejs'탬플릿을 엔진으로 한다.
-// app.set('views', path.join(__dirname, 'views')); //폴더, 폴더경로 지정
 
 // access control allow origin   
 // app.use(cors({
