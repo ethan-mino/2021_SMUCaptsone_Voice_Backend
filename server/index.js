@@ -16,10 +16,6 @@ app.use(bodyParser.json());
 // 쿠키 추출
 app.use(cookieParser())
 
-
-app.set('view engine', 'ejs'); //'ejs'탬플릿을 엔진으로 한다.
-app.set('views', path.join(__dirname, 'views')); //폴더, 폴더경로 지정
-
 app.use(session({
     key: "user", // 저장될 키 값
     secret: "secret", // 서명에 필요한 값
@@ -34,7 +30,6 @@ app.use(session({
 app.use(express.static(__dirname + '/public'))
 
 // use routes
-app.use("/api", require('./routes/main'))
 app.use("/api", require('./routes/signup'))
 app.use("/api", require('./routes/login'))
 app.use("/api/diary", require('./routes/diary'))
