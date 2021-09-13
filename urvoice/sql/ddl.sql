@@ -16,7 +16,7 @@ CREATE TABLE `user` (
 CREATE TABLE emoji_category
 (
     `id`    INT            NOT NULL    AUTO_INCREMENT, 
-    `name`  VARCHAR(50)    NULL, 
+    `name`  VARCHAR(50)    NOT NULL, 
      PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -24,9 +24,9 @@ CREATE TABLE emoji_category
 CREATE TABLE emoji
 (
     `id`           INT            NOT NULL    AUTO_INCREMENT, 
-    `text`         VARCHAR(50)    NULL, 
-    `color`        VARCHAR(50)    NULL, 
-    `category_id`  INT            NULL, 
+    `text`         VARCHAR(50)    NOT NULL, 
+    `color`        VARCHAR(50)    NOT NULL, 
+    `category_id`  INT            NOT NULL, 
      PRIMARY KEY (`id`),
      FOREIGN KEY (`category_id`) REFERENCES emoji_category (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -36,7 +36,7 @@ CREATE TABLE diary
 (
     `id`           INT             NOT NULL    AUTO_INCREMENT, 
     `content`      TEXT            NULL, 
-    `emoji_id`     INT             NULL, 
+    `emoji_id`     INT             NOT NULL, 
     `login_id`     VARCHAR(100)    NOT NULL, 
     `create_date`  DATETIME        NOT NULL, 
      PRIMARY KEY (`id`),
@@ -48,8 +48,9 @@ CREATE TABLE diary
 CREATE TABLE file
 (
     `id`     INT             NOT NULL    AUTO_INCREMENT, 
-    `path`   VARCHAR(100)    NULL, 
-    `owner`  VARCHAR(100)    NULL, 
+    `file_path`   VARCHAR(100)    NOT NULL, 
+    `owner`  VARCHAR(100)    NOT NULL, 
+	`content_type` varchar(50) NOT NULL,
      PRIMARY KEY (`id`),
      FOREIGN KEY (`owner`) REFERENCES user (`login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

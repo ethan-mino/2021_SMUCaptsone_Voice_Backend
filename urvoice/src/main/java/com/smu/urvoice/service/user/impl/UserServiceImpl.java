@@ -9,7 +9,6 @@ import com.smu.urvoice.mapper.user.UserMapper;
 import com.smu.urvoice.mapper.user.UserRoleMapper;
 import com.smu.urvoice.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
