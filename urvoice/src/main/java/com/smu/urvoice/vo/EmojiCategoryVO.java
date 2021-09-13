@@ -7,9 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FileVO {
+
+public class EmojiCategoryVO {
     private int id;
-    private String filePath;
-    private String contentType;
-    private String owner;
+    private String name;
 }

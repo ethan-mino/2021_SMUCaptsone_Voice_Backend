@@ -1,4 +1,7 @@
 package com.smu.urvoice.mapper.chat;
 
-public class ChatMapper {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ChatMapper {
 }

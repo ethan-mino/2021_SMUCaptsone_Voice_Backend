@@ -2,5 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smu.urvoice.mapper.diary.DiaryMapper">
 
+    <insert id = "insertDiary" parameterType="com.smu.urvoice.vo.DiaryVO">
+        INSERT INTO diary (id, content, emoji_id, login_id, create_date)
+        VALUES(#{id}, #{content}, #{emojiId}, #{loginId}, #{createDate})
+    </insert>
 
+    <delete id = "deleteDiaryById">
+        DELETE FROM diary
+        WHERE id = #{id} and login_id = #{loginId}
+    </delete>
 </mapper>

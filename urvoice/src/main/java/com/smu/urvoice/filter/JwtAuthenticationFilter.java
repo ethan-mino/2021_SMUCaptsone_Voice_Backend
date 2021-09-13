@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import java.util.Map;
 // Authentication logic을 수행할 Filter
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -67,9 +69,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(username)   // CustomUserDetails의 username 필드값을 Subject로 하는 JWT Token을 생성한다.
-                //.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))    // 생성한 JWT TOKEN은 response의 header에 전달한다.
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))    // 생성한 JWT TOKEN은 response의 header에 전달한다.
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
-
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);    // Add token in response
         response.setContentType("application/json");

@@ -1,7 +1,10 @@
 package com.smu.urvoice.config.security;
 
 import com.smu.urvoice.filter.JwtAuthenticationFilter;
+import com.smu.urvoice.filter.JwtAuthorizationFilter;
 import com.smu.urvoice.service.user.CustomUserDetailsService;
+import com.smu.urvoice.service.user.UserService;
+import com.smu.urvoice.service.user.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    UserService userService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
@@ -33,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) // jwt filters 추가
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userService))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/login", "/signUp").permitAll()

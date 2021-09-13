@@ -21,6 +21,6 @@
     <delete id = "deleteFileInfoById" parameterType="com.smu.urvoice.vo.FileVO">
         DELETE
         FROM file
-        WHERE id = #{id}
+        WHERE id = #{id} and owner = #{owner}
     </delete>
 </mapper>
