@@ -1,16 +1,55 @@
-CREATE TABLE `userDto` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `login_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'login id',
+CREATE TABLE `user` (
+  `login_id` VARCHAR(100) NOT NULL COMMENT 'login id',
   `password` VARCHAR(255) NOT NULL COMMENT '암호회된 password',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`login_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   
   
   CREATE TABLE `user_role` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `user_id` INT(11) NOT NULL COMMENT 'userDto id fk',
+  `login_id` VARCHAR(100) NOT NULL COMMENT 'login id fk',
   `role_name` VARCHAR(100) NOT NULL COMMENT 'role 이름 ROLE_ 로 시작하는 값이어야 한다.',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`)
-  REFERENCES `userDto` (`id`)
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8
+  FOREIGN KEY (`login_id`) REFERENCES `user` (`login_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE emoji_category
+(
+    `id`    INT            NOT NULL    AUTO_INCREMENT, 
+    `name`  VARCHAR(50)    NULL, 
+     PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE emoji
+(
+    `id`           INT            NOT NULL    AUTO_INCREMENT, 
+    `text`         VARCHAR(50)    NULL, 
+    `color`        VARCHAR(50)    NULL, 
+    `category_id`  INT            NULL, 
+     PRIMARY KEY (`id`),
+     FOREIGN KEY (`category_id`) REFERENCES emoji_category (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE diary
+(
+    `id`           INT             NOT NULL    AUTO_INCREMENT, 
+    `content`      TEXT            NULL, 
+    `emoji_id`     INT             NULL, 
+    `login_id`     VARCHAR(100)    NOT NULL, 
+    `create_date`  DATETIME        NOT NULL, 
+     PRIMARY KEY (`id`),
+     FOREIGN KEY (`login_id`) REFERENCES `user` (`login_id`),
+     FOREIGN KEY (`emoji_id`) REFERENCES emoji (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE file
+(
+    `id`     INT             NOT NULL    AUTO_INCREMENT, 
+    `path`   VARCHAR(100)    NULL, 
+    `owner`  VARCHAR(100)    NULL, 
+     PRIMARY KEY (`id`),
+     FOREIGN KEY (`owner`) REFERENCES user (`login_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
