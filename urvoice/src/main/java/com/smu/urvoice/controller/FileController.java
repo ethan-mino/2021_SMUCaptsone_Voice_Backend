@@ -1,6 +1,7 @@
 package com.smu.urvoice.controller;
 
 import com.smu.urvoice.dto.user.CustomUserDetails;
+import com.smu.urvoice.dto.user.UserDto;
 import com.smu.urvoice.service.file.FileService;
 import com.smu.urvoice.vo.FileVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class FileController {
     FileService fileService;
 
     @GetMapping("/download")
-    public void fileDownload(@RequestParam("fileId") int fileId, HttpServletResponse response, @AuthenticationPrincipal CustomUserDetails userDetails){
-        String loginId = userDetails.getUsername(); // 유저의 회사명
+    public void fileDownload(@RequestParam("fileId") int fileId, HttpServletResponse response, @AuthenticationPrincipal UserDto userDto){
+        String loginId = userDto.getLoginId(); // 유저의 회사명
 
         FileVO fileInfoVo = fileService.getFileInfoById(fileId);   // fileId로 파일 정보 조회
 
