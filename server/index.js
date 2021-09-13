@@ -33,6 +33,7 @@ app.use(express.static(__dirname + '/public'))
 app.use("/api", require('./routes/signup'))
 app.use("/api", require('./routes/login'))
 app.use("/api/diary", require('./routes/diary'))
+app.use("/api/downloads", require('./routes/downloads'))
 
 app.use('/save', express.static(path.join(__dirname, 'assests/save')));
 
