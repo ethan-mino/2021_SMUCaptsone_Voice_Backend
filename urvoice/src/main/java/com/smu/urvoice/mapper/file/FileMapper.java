@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface FileMapper {
     List<FileVO> getFileInfoByOwner(String owner);
-    FileVO getFileInfoById(int fileId);
+    FileVO getFileInfoById(String loginId, int fileId);
     int insertFileInfo (FileVO fileVO);
     int deleteFileInfoById(int fileId);
 }

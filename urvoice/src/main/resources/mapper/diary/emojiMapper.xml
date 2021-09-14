@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smu.urvoice.mapper.diary.EmojiMapper">
+    <select id="getEmojiById" resultType="com.smu.urvoice.dto.diary.EmojiDetailDto">
+        SELECT e.id , e.text, e.color, ec.id as 'category_id', ec.name as 'category_name'
+        FROM emoji e JOIN emoji_category ec on ec.id = e.category_id
+        WHERE e.id = #{emojiId}
+    </select>
 
     <select id ="getAllEmojiCategory" resultType="com.smu.urvoice.vo.EmojiCategoryVO">
         SELECT id, name

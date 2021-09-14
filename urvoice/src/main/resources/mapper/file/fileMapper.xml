@@ -10,7 +10,7 @@
     <select id = "getFileInfoById" resultType="com.smu.urvoice.vo.FileVO">
         SELECT id, file_path, owner, content_type
         FROM file
-        WHERE id = #{id}
+        WHERE id = #{id} AND owner = #{owner}
     </select>
 
     <insert id = "insertFileInfo" parameterType="com.smu.urvoice.vo.FileVO" useGeneratedKeys="true" keyProperty="id">

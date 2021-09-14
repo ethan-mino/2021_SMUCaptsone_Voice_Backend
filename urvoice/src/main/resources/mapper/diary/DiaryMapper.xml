@@ -2,6 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smu.urvoice.mapper.diary.DiaryMapper">
 
+    <resultMap id = "diaryStatistics" type = "com.smu.urvoice.dto.diary.StatisticsDto">
+        <id property="id" column="id"/>
+        <result property="date" column="DATE"/>
+        <collection property="emojiCntList" column="DATE" javaType="java.util.ArrayList" ofType="com.smu.urvoice.dto.diary.EmojiCntDto" select="getEmojiCntByDate"/>
+    </resultMap>
+
+    <resultMap id="emojiCnt" type="com.smu.urvoice.dto.diary.EmojiCntDto">
+        <id property="id" column="id"/>
+        <result property="cnt" column="cnt"/>
+        <association property="emojiDetailDto" javaType="com.smu.urvoice.dto.diary.EmojiDetailDto">
+            <result property="id" column="ID"/>
+            <result property="categoryId" column="CATEGORY_ID"/>
+            <result property="text" column="TEXT"/>
+            <result property="color" column="COLOR"/>
+            <result property="categoryName" column="CATEGORY_NAME"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmojiCntByDate" resultMap="emojiCnt">
+        SELECT COUNT(d.emoji_id) as cnt, d.emoji_id as id, e.category_id as category_id, e.text as text, e.color as color, ec.name as category_name
+        FROM diary d JOIN emoji e on e.id = d.emoji_id
+                     JOIN emoji_category ec on ec.id = e.category_id
+        WHERE DATE(create_date) = #{date} OR DATE_FORMAT(create_date,'%Y-%m') = #{date}
+        GROUP BY d.emoji_id
+    </select>
+
+    <select id="getStatistics" resultMap="diaryStatistics">
+        SELECT DISTINCT
+               <choose>
+                   <when test="type=='year'">DATE_FORMAT(create_date,'%Y-%m') AS `date`</when>
+                   <otherwise>DATE(create_date) AS `date`</otherwise>
+               </choose>
+        FROM diary
+        where login_id = #{loginId} AND #{stdYear} = YEAR(create_date)
+
+          <if test="type != 'year'">AND #{stdMonth} = MONTH(create_date)</if>
+          <if test="type != 'year' and type != 'month'">AND #{stdDate} = DAY(create_date)</if>
+        ORDER BY create_date
+    </select>
+
+
+    <select id="getDiaryByDate" resultType="com.smu.urvoice.vo.DiaryVO">
+        SELECT id, content, emoji_id, login_id, create_date
+        FROM diary
+        WHERE login_id = #{loginId} AND create_date = #{createDate}
+        ORDER BY create_date desc;
+    </select>
+
+    <select id="getDiaryById" resultType="com.smu.urvoice.vo.DiaryVO">
+        SELECT id, content, emoji_id, login_id, create_date
+        FROM diary
+        WHERE login_id = #{loginId} AND id = #{diaryId}
+    </select>
+
     <insert id = "insertDiary" parameterType="com.smu.urvoice.vo.DiaryVO">
         INSERT INTO diary (id, content, emoji_id, login_id, create_date)
         VALUES(#{id}, #{content}, #{emojiId}, #{loginId}, #{createDate})
@@ -9,6 +63,12 @@
 
     <delete id = "deleteDiaryById">
         DELETE FROM diary
-        WHERE id = #{id} and login_id = #{loginId}
+        WHERE id = #{diaryId} and login_id = #{loginId}
     </delete>
+
+    <update id="updateDiary">
+        UPDATE diary
+        SET create_date = #{createDate}, emoji_id = #{emojiId}, content = #{content}
+        WHERE id = #{id} AND login_id = #{loginId}
+    </update>
 </mapper>

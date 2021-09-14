@@ -19,8 +19,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileVO getFileInfoById(int fileId) {
-        return fileMapper.getFileInfoById(fileId);
+    public FileVO getFileInfoById(String loginId, int fileId) {
+        return fileMapper.getFileInfoById(loginId, fileId);
     }
 
     @Override

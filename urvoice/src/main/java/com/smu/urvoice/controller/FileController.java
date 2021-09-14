@@ -1,6 +1,5 @@
 package com.smu.urvoice.controller;
 
-import com.smu.urvoice.dto.user.CustomUserDetails;
 import com.smu.urvoice.dto.user.UserDto;
 import com.smu.urvoice.service.file.FileService;
 import com.smu.urvoice.vo.FileVO;
@@ -24,15 +23,17 @@ public class FileController {
     public void fileDownload(@RequestParam("fileId") int fileId, HttpServletResponse response, @AuthenticationPrincipal UserDto userDto){
         String loginId = userDto.getLoginId(); // 유저의 회사명
 
-        FileVO fileInfoVo = fileService.getFileInfoById(fileId);   // fileId로 파일 정보 조회
+        FileVO fileInfoVo = fileService.getFileInfoById(loginId, fileId);   // fileId로 파일 정보 조회
 
-        if(fileInfoVo.getOwner().equals(loginId)) {  // companyNm과 file의 owner 비교 (owner라면 파일 전송)
+        if(fileInfoVo != null) {  // companyNm과 file의 owner 비교 (owner라면 파일 전송)
             String filePath = fileInfoVo.getFilePath();
             String contentType = fileInfoVo.getContentType();
 
             sendFile(response, contentType, filePath);    // 요청한 파일 전송
             removeFile(fileInfoVo.getFilePath());  // 전송한 파일 삭제
             fileService.deleteFileInfoById(fileId);   // 파일 정보 삭제
+        }else {
+
         }
     }
 }

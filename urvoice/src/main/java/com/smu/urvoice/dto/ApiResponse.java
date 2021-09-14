@@ -13,6 +13,10 @@ public class ApiResponse {
     private String errorMessage;
     private Map<String, Object> result;
 
+    public ApiResponse(boolean error){
+        this.error = error;
+    }
+
     public ApiResponse(boolean error, String errorMessage){
         this.error = error;
         this.errorMessage = errorMessage;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FileService {
     List<FileVO> getFileInfoByOwner(String owner);
-    FileVO getFileInfoById(int fileId);
+    FileVO getFileInfoById(String loginId, int fileId);
     int insertFileInfo (FileVO fileVO);
     int deleteFileInfoById(int fileId);
 }

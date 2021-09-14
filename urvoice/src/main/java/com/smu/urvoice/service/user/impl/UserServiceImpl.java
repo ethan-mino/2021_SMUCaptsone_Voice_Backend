@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getUser(String loginId) {
+	public UserDto getUserByLoginId(String loginId) {
 		UserDto userDto = userMapper.getUser(loginId);
 
 		if (userDto == null)

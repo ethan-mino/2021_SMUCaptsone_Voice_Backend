@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
     boolean loginIdValidation(String loginId);
     int createUser(UserDto userDto);
-    UserDto getUser(String loginId);
+    UserDto getUserByLoginId(String loginId);
     List<UserRoleDto> getUserRoles(String loginId);
 }

@@ -1,13 +1,11 @@
-package com.smu.urvoice.mapper.diary;
+package com.smu.urvoice.service.Diary;
 
 import com.smu.urvoice.dto.diary.EmojiDetailDto;
 import com.smu.urvoice.vo.EmojiCategoryVO;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface EmojiMapper {
+public interface EmojiService {
     List<EmojiCategoryVO> getAllEmojiCategory();
     EmojiDetailDto getEmojiById(int emojiId);
 }
