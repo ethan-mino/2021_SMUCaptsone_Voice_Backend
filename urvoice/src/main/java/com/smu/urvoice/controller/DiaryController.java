@@ -2,9 +2,12 @@ package com.smu.urvoice.controller;
 
 import com.smu.urvoice.dto.ApiResponse;
 import com.smu.urvoice.dto.diary.DiaryDetailDto;
+import com.smu.urvoice.dto.diary.EmojiCategoryDetailDto;
+import com.smu.urvoice.dto.diary.EmojiDetailDto;
 import com.smu.urvoice.dto.diary.StatisticsDto;
 import com.smu.urvoice.dto.user.UserDto;
 import com.smu.urvoice.service.Diary.DiaryService;
+import com.smu.urvoice.service.Diary.EmojiService;
 import com.smu.urvoice.vo.DiaryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +24,9 @@ import java.util.List;
 public class DiaryController {
     @Autowired
     DiaryService diaryService;
+
+    @Autowired
+    EmojiService emojiService;
 
     @ApiOperation(value = "작성일로 다이어리 조회")
     @GetMapping("/diary")
@@ -87,4 +93,17 @@ public class DiaryController {
 
         return diaryService.getStatistics(loginId, stdYear, stdMonth, stdDate);
     }
+
+    @ApiOperation("이모지 조회")
+    @GetMapping("/diary/emojis")
+    public List<EmojiDetailDto> getEmojis() {
+        return emojiService.getEmojis();
+    }
+
+    @ApiOperation("이모지 카테고리 조회")
+    @GetMapping("/diary/emoji/categories")
+    public List<EmojiCategoryDetailDto> getEmojiCategories(){
+        return emojiService.getEmojiCategories();
+    }
+
 }

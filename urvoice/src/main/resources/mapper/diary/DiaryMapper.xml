@@ -21,7 +21,7 @@
     </resultMap>
 
     <select id="getEmojiCntByDate" resultMap="emojiCnt">
-        SELECT COUNT(d.emoji_id) as cnt, d.emoji_id as id, e.category_id as category_id, e.text as text, e.color as color, ec.name as category_name
+        SELECT COUNT(d.emoji_id) as cnt, d.emoji_id as id, e.category_id as category_id, e.text as text, ec.color as color, ec.name as category_name
         FROM diary d JOIN emoji e on e.id = d.emoji_id
                      JOIN emoji_category ec on ec.id = e.category_id
         WHERE DATE(create_date) = #{date} OR DATE_FORMAT(create_date,'%Y-%m') = #{date}

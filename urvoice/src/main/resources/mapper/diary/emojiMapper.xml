@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smu.urvoice.mapper.diary.EmojiMapper">
     <select id="getEmojiById" resultType="com.smu.urvoice.dto.diary.EmojiDetailDto">
-        SELECT e.id , e.text, e.color, ec.id as 'category_id', ec.name as 'category_name'
+        SELECT e.id , e.text, ec.color, ec.id as 'category_id', ec.name as 'category_name'
         FROM emoji e JOIN emoji_category ec on ec.id = e.category_id
         WHERE e.id = #{emojiId}
     </select>
@@ -10,5 +10,28 @@
     <select id ="getAllEmojiCategory" resultType="com.smu.urvoice.vo.EmojiCategoryVO">
         SELECT id, name
         FROM emoji_category
+    </select>
+
+    <resultMap id = "EmojiCategoryDetail" type = "com.smu.urvoice.dto.diary.EmojiCategoryDetailDto">
+        <id property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="color" column="COLOR"/>
+        <collection property="emojiDetailDtos" column="ID" javaType="java.util.ArrayList" ofType="com.smu.urvoice.dto.diary.EmojiDetailDto" select="getEmojiByCategoryId"/>
+    </resultMap>
+
+    <select id = "getEmojis" resultType="com.smu.urvoice.dto.diary.EmojiDetailDto">
+        SELECT e.id, ec.name as category_name , e.text, ec.color, e.category_id
+        FROM emoji e JOIN emoji_category ec on e.category_id = ec.id
+    </select>
+
+    <select id = "getEmojiByCategoryId" resultType="com.smu.urvoice.dto.diary.EmojiDetailDto">
+        SELECT e.id, ec.name as category_name , e.text, ec.color, e.category_id
+        FROM emoji e JOIN emoji_category ec on e.category_id = ec.id
+        WHERE ec.id = #{id}
+    </select>
+
+    <select id="getEmojiCategories" resultMap="EmojiCategoryDetail">
+        SELECT id, name, color
+        FROM emoji_category;
     </select>
 </mapper>

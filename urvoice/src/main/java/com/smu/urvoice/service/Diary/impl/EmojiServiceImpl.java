@@ -1,5 +1,6 @@
 package com.smu.urvoice.service.Diary.impl;
 
+import com.smu.urvoice.dto.diary.EmojiCategoryDetailDto;
 import com.smu.urvoice.dto.diary.EmojiDetailDto;
 import com.smu.urvoice.mapper.diary.EmojiMapper;
 import com.smu.urvoice.service.Diary.EmojiService;
@@ -22,5 +23,15 @@ public class EmojiServiceImpl implements EmojiService {
     @Override
     public EmojiDetailDto getEmojiById(int emojiId) {
         return emojiMapper.getEmojiById(emojiId);
+    }
+
+    @Override
+    public List<EmojiDetailDto> getEmojis(){
+        return emojiMapper.getEmojis();
+    }
+
+    @Override
+    public List<EmojiCategoryDetailDto> getEmojiCategories(){
+        return emojiMapper.getEmojiCategories();
     }
 }

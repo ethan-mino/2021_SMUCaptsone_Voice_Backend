@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface DiaryService {
-
     int insertDiary(DiaryVO diaryVO);
     int deleteDiaryById(String loginId, int diaryId);
     int updateDiary(DiaryVO diaryVO);
