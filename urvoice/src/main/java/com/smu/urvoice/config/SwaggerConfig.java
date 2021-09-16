@@ -26,6 +26,7 @@ public class SwaggerConfig {
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("urvoice")
+                .useDefaultResponseMessages(false)
                 .apiInfo(this.apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors
