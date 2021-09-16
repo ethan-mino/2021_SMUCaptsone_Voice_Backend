@@ -57,8 +57,8 @@
     </select>
 
     <insert id = "insertDiary" parameterType="com.smu.urvoice.vo.DiaryVO">
-        INSERT INTO diary (id, content, emoji_id, login_id, create_date)
-        VALUES(#{id}, #{content}, #{emojiId}, #{loginId}, #{createDate})
+        INSERT INTO diary (content, emoji_id, login_id, create_date)
+        VALUES(#{content}, #{emojiId}, #{loginId}, #{createDate})
     </insert>
 
     <delete id = "deleteDiaryById">

@@ -91,7 +91,7 @@ public class DiaryController {
             return new ApiResponse(true, "다이어리 수정 실패!");
     }
 
-    @ApiOperation(value = "통계 조회")
+    @ApiOperation(value = "통계 조회", notes = "stdYear만 주어진 경우 월별 통계, stdMonth까지 주어진 경우, 해당 월의 일별 통계, stdDate까지 주어진 경우, 해당 일의 통계 조회")
     @GetMapping("/diary/statistics")
     public List<StatisticsDto> getStatistics(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
                                              @ApiParam(value = "기준년도", required = true, example = "2020") @RequestParam String stdYear,

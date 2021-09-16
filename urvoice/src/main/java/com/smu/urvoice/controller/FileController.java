@@ -28,7 +28,7 @@ public class FileController {
     @GetMapping("/download")
     public void fileDownload(@ApiParam(value = "파일 id", required = true, example = "1") @RequestParam("fileId") int fileId,
                              @ApiIgnore HttpServletResponse response,
-                             @AuthenticationPrincipal UserDto userDto){
+                             @ApiIgnore @AuthenticationPrincipal UserDto userDto){
         String loginId = userDto.getLoginId(); // 유저의 회사명
 
         FileVO fileInfoVo = fileService.getFileInfoById(loginId, fileId);   // fileId로 파일 정보 조회
