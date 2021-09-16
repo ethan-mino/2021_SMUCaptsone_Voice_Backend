@@ -35,7 +35,7 @@
                    <otherwise>DATE(create_date) AS `date`</otherwise>
                </choose>
         FROM diary
-        where login_id = #{loginId} AND #{stdYear} = YEAR(create_date)
+        where writer = #{writer} AND #{stdYear} = YEAR(create_date)
 
           <if test="type != 'year'">AND #{stdMonth} = MONTH(create_date)</if>
           <if test="type != 'year' and type != 'month'">AND #{stdDate} = DAY(create_date)</if>
@@ -43,32 +43,32 @@
     </select>
 
 
-    <select id="getDiaryByDate" resultType="com.smu.urvoice.vo.DiaryVO">
-        SELECT id, content, emoji_id, login_id, create_date
+    <select id="getDiaryByDate" resultType="com.smu.urvoice.vo.diary.DiaryVO">
+        SELECT id, content, emoji_id, writer, create_date
         FROM diary
-        WHERE login_id = #{loginId} AND create_date = #{createDate}
+        WHERE writer = #{writer} AND create_date = #{createDate}
         ORDER BY create_date desc;
     </select>
 
-    <select id="getDiaryById" resultType="com.smu.urvoice.vo.DiaryVO">
-        SELECT id, content, emoji_id, login_id, create_date
+    <select id="getDiaryById" resultType="com.smu.urvoice.vo.diary.DiaryVO">
+        SELECT id, content, emoji_id, writer, create_date
         FROM diary
-        WHERE login_id = #{loginId} AND id = #{diaryId}
+        WHERE writer = #{writer} AND id = #{diaryId}
     </select>
 
-    <insert id = "insertDiary" parameterType="com.smu.urvoice.vo.DiaryVO">
-        INSERT INTO diary (content, emoji_id, login_id, create_date)
-        VALUES(#{content}, #{emojiId}, #{loginId}, #{createDate})
+    <insert id = "insertDiary" parameterType="com.smu.urvoice.vo.diary.DiaryVO">
+        INSERT INTO diary (content, emoji_id, writer, create_date)
+        VALUES(#{content}, #{emojiId}, #{writer}, #{createDate})
     </insert>
 
     <delete id = "deleteDiaryById">
         DELETE FROM diary
-        WHERE id = #{diaryId} and login_id = #{loginId}
+        WHERE id = #{diaryId} and writer = #{writer}
     </delete>
 
     <update id="updateDiary">
         UPDATE diary
         SET create_date = #{createDate}, emoji_id = #{emojiId}, content = #{content}
-        WHERE id = #{id} AND login_id = #{loginId}
+        WHERE id = #{id} AND writer = #{writer}
     </update>
 </mapper>

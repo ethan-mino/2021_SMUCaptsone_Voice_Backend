@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smu.urvoice.mapper.file.FileMapper">
     <select id = "getFileInfoByOwner" resultType="com.smu.urvoice.vo.FileVO">
-        SELECT id, file_path, owner, content_type
+        SELECT id, file_path, owner, content_type, url
         FROM file
         WHERE owner = #{owner}
     </select>
 
     <select id = "getFileInfoById" resultType="com.smu.urvoice.vo.FileVO">
-        SELECT id, file_path, owner, content_type
+        SELECT id, file_path, owner, content_type, url
         FROM file
         WHERE id = #{id} AND owner = #{owner}
     </select>
 
     <insert id = "insertFileInfo" parameterType="com.smu.urvoice.vo.FileVO" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO file (file_path, owner, content_type)
-        VALUES(#{filePath}, #{owner}, #{contentType})
+        INSERT INTO file (file_path, owner, content_type, url)
+        VALUES(#{filePath}, #{owner}, #{contentType}, ${url})
     </insert>
 
     <delete id = "deleteFileInfoById" parameterType="com.smu.urvoice.vo.FileVO">

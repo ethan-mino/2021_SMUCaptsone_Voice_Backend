@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smu.urvoice.config.security.JwtProperties;
 import com.smu.urvoice.dto.user.CustomUserDetails;
-import com.smu.urvoice.dto.user.UserDto;
+import com.smu.urvoice.vo.user.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,10 +38,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
    */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        UserDto credentials = null;
+        UserVO credentials = null;
 
         try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), UserDto.class);
+            credentials = new ObjectMapper().readValue(request.getInputStream(), UserVO.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

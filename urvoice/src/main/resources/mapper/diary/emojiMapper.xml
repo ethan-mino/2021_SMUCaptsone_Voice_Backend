@@ -7,7 +7,7 @@
         WHERE e.id = #{emojiId}
     </select>
 
-    <select id ="getAllEmojiCategory" resultType="com.smu.urvoice.vo.EmojiCategoryVO">
+    <select id ="getAllEmojiCategory" resultType="com.smu.urvoice.vo.diary.EmojiCategoryVO">
         SELECT id, name
         FROM emoji_category
     </select>

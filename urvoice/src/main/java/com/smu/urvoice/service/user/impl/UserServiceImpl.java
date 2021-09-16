@@ -3,8 +3,9 @@ package com.smu.urvoice.service.user.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.smu.urvoice.dto.user.UserDto;
-import com.smu.urvoice.dto.user.UserRoleDto;
+import com.smu.urvoice.dto.user.UserDetailDto;
+import com.smu.urvoice.vo.user.UserVO;
+import com.smu.urvoice.vo.user.UserRoleVO;
 import com.smu.urvoice.mapper.user.UserMapper;
 import com.smu.urvoice.mapper.user.UserRoleMapper;
 import com.smu.urvoice.service.user.UserService;
@@ -30,38 +31,38 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(readOnly = true)
 	public boolean loginIdValidation(String loginId){
-		UserDto userDto = userMapper.getUser(loginId);
+		UserVO userVO = userMapper.getUserByLoginId(loginId);
 
-		return (userDto == null);
+		return (userVO == null);
 	}
 
 	@Transactional(readOnly = false)
-	public int createUser(UserDto userDto) {
-		userMapper.insertUser(userDto);
-		String loginId = userDto.getLoginId();
+	public int createUser(UserVO userVO) {
+		userMapper.insertUser(userVO);
+		String loginId = userVO.getLoginId();
 
-		UserRoleDto userRoleDto = new UserRoleDto(loginId, "ROLE_USER");
+		UserRoleVO userRoleVO = new UserRoleVO(loginId, "ROLE_USER");
 
-		return userRoleMapper.insertUserRole(userRoleDto);
+		return userRoleMapper.insertUserRole(userRoleVO);
 	}
 
 	@Override
-	public UserDto getUserByLoginId(String loginId) {
-		UserDto userDto = userMapper.getUser(loginId);
-
-		if (userDto == null)
-			return null;
-
-		return userDto;
+	public UserDetailDto getUserDetailByLoginId(String loginId) {
+		return userMapper.getUserDetailByLoginId(loginId);
 	}
 
 	@Override
-	public List<UserRoleDto> getUserRoles(String loginId) {
-		List<UserRoleDto> userRoleDtos = userRoleMapper.getRolesById(loginId);
-		List<UserRoleDto> list = new ArrayList<>();
+	public UserVO getUserByLoginId(String loginId) {
+		return userMapper.getUserByLoginId(loginId);
+	}
 
-		for (UserRoleDto userRoleDto : userRoleDtos) {
-			list.add(new UserRoleDto(loginId, userRoleDto.getRoleName()));
+	@Override
+	public List<UserRoleVO> getUserRoles(String loginId) {
+		List<UserRoleVO> userRoleVOS = userRoleMapper.getRolesById(loginId);
+		List<UserRoleVO> list = new ArrayList<>();
+
+		for (UserRoleVO userRoleVO : userRoleVOS) {
+			list.add(new UserRoleVO(loginId, userRoleVO.getRoleName()));
 		}
 		return list;
 	}

@@ -6,7 +6,7 @@ import com.smu.urvoice.dto.diary.StatisticsDto;
 import com.smu.urvoice.mapper.diary.DiaryMapper;
 import com.smu.urvoice.service.Diary.DiaryService;
 import com.smu.urvoice.service.Diary.EmojiService;
-import com.smu.urvoice.vo.DiaryVO;
+import com.smu.urvoice.vo.diary.DiaryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,22 +28,22 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public int deleteDiaryById(String loginId, int diaryId) {
-        return diaryMapper.deleteDiaryById(loginId, diaryId);
+    public int deleteDiaryById(String writer, int diaryId) {
+        return diaryMapper.deleteDiaryById(writer, diaryId);
     }
     @Override
     public int updateDiary(DiaryVO diaryVO){
         return diaryMapper.updateDiary(diaryVO);
     }
 
-    public List<DiaryDetailDto> getDiaryByDate(String loginId, Date createDate){
-        List<DiaryVO> diaryVOList = diaryMapper.getDiaryByDate(loginId, createDate);
+    public List<DiaryDetailDto> getDiaryByDate(String writer, Date createDate){
+        List<DiaryVO> diaryVOList = diaryMapper.getDiaryByDate(writer, createDate);
 
         List<DiaryDetailDto> diaryDetailDtoList = new ArrayList<>();
 
         for (DiaryVO diaryVO : diaryVOList){
             int diaryId = diaryVO.getId();
-            DiaryDetailDto diaryDetailDto = getDiaryById(loginId, diaryId);
+            DiaryDetailDto diaryDetailDto = getDiaryById(writer, diaryId);
             diaryDetailDtoList.add(diaryDetailDto);
         }
 
@@ -51,8 +51,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDetailDto getDiaryById(String loginId, int diaryId) {
-        DiaryVO diaryVo = diaryMapper.getDiaryById(loginId, diaryId);
+    public DiaryDetailDto getDiaryById(String writer, int diaryId) {
+        DiaryVO diaryVo = diaryMapper.getDiaryById(writer, diaryId);
         if (diaryVo != null){
             int emojiId = diaryVo.getEmojiId();
             EmojiDetailDto emojiDetailDto = emojiService.getEmojiById(emojiId);
@@ -69,7 +69,7 @@ public class DiaryServiceImpl implements DiaryService {
         }
     }
 
-    public List<StatisticsDto> getStatistics(String loginId, String stdYear, String stdMonth, String stdDate){
+    public List<StatisticsDto> getStatistics(String writer, String stdYear, String stdMonth, String stdDate){
         List<StatisticsDto> statisticsDtoList = null;
         String searchType = "";
 
@@ -83,7 +83,7 @@ public class DiaryServiceImpl implements DiaryService {
             searchType = "year";
         }
 
-        statisticsDtoList = diaryMapper.getStatistics(loginId, stdYear, stdMonth, stdDate, searchType);
+        statisticsDtoList = diaryMapper.getStatistics(writer, stdYear, stdMonth, stdDate, searchType);
 
         return statisticsDtoList;
     }

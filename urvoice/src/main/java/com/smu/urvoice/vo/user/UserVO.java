@@ -1,4 +1,4 @@
-package com.smu.urvoice.dto.user;
+package com.smu.urvoice.vo.user;
 
 import lombok.*;
 
@@ -6,7 +6,8 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDto {
+public class UserVO {
     private String loginId;
     private String password;
+    private Integer imageFileId;
 }

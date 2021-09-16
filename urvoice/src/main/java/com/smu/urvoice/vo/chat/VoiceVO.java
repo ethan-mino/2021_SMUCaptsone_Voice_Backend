@@ -1,6 +1,7 @@
-package com.smu.urvoice.vo;
+package com.smu.urvoice.vo.chat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,11 +9,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"owner", "filePath"})
-public class FileVO {
+@JsonIgnoreProperties({"owner"})
+public class VoiceVO {
     private int id;
-    private String filePath;
-    private String contentType;
+    private String name;
+
+    @ApiModelProperty(hidden=true)
     private String owner;
-    private String url;
 }
