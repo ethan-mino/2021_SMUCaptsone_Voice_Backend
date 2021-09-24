@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container cand-frame text-center">
+  <form method="post" action="/transfer">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm">
+        <span style="line-height: 35px;">역-변환</span>
+      </div>
+      <div class="col-sm">
+        <label class="bs-switch">
+          {{ form.enable_backtrans }}
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="col-sm-8"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <span style="line-height: 35px;">변환 어체</span>
+      </div>
+      <div class="col-sm-3">
+        {{ form.target_style }}
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+    <p>입력문장</p>
+    {{ form.input_text }}
+    <p>출력문장</p>
+    <textarea name="result_text" rows="5" cols="80" disabled="true">{{ result.result_text }}</textarea>
+    {{ form.errors }}
+    <p>&nbsp;</p>
+    <button type="submit" class="btn btn-primary">어체 변환</button>
+  </form>
+
+</div>
+
+{% endblock %}

@@ -5,10 +5,10 @@ import com.smu.urvoice.dto.diary.DiaryDetailDto;
 import com.smu.urvoice.dto.diary.EmojiCategoryDetailDto;
 import com.smu.urvoice.dto.diary.EmojiDetailDto;
 import com.smu.urvoice.dto.diary.StatisticsDto;
-import com.smu.urvoice.dto.user.UserDto;
+import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.service.Diary.DiaryService;
 import com.smu.urvoice.service.Diary.EmojiService;
-import com.smu.urvoice.vo.DiaryVO;
+import com.smu.urvoice.vo.diary.DiaryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,28 +32,28 @@ public class DiaryController {
 
     @ApiOperation(value = "작성일로 다이어리 조회", tags = {"Diary"})
     @GetMapping("/diary")
-    public List<DiaryDetailDto> getDiaries(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public List<DiaryDetailDto> getDiaries(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                            @ApiParam(value = "기준일", required = true, example = "2020-09-23") @RequestParam("stdDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date stdDate) {
-        String loginId = userDto.getLoginId();
+        String loginId = userVO.getLoginId();
 
         return diaryService.getDiaryByDate(loginId, stdDate);
     }
 
     @ApiOperation(value = "diary Id로 다이어리 조회")
     @GetMapping("/diary/{id}")
-    public DiaryDetailDto getDiary(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public DiaryDetailDto getDiary(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                    @ApiParam(value = "다이어리 id", required = true, example = "1") @PathVariable("id") int diaryId) {
-        String loginId = userDto.getLoginId();
+        String loginId = userVO.getLoginId();
 
         return diaryService.getDiaryById(loginId, diaryId);
     }
 
     @ApiOperation(value = "다이어리 생성")
     @PostMapping("/diary")
-    public ApiResponse createDiary(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public ApiResponse createDiary(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                    @ApiParam(value = "다이어리 정보", required = true) @RequestBody DiaryVO diaryVO) {
-        String loginId = userDto.getLoginId();
-        diaryVO.setLoginId(loginId);
+        String loginId = userVO.getLoginId();
+        diaryVO.setWriter(loginId);
 
         int insertCnt = diaryService.insertDiary(diaryVO);
         if (insertCnt != 0)
@@ -64,9 +64,9 @@ public class DiaryController {
 
     @ApiOperation(value = "다이어리 삭제")
     @DeleteMapping("/diary")
-    public ApiResponse deleteDiary(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public ApiResponse deleteDiary(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                    @ApiParam(value = "다이어리 id", required = true, example = "1") @RequestParam int diaryId) {
-        String loginId = userDto.getLoginId();
+        String loginId = userVO.getLoginId();
 
         int deleteCnt = diaryService.deleteDiaryById(loginId, diaryId);
 
@@ -78,10 +78,10 @@ public class DiaryController {
 
     @ApiOperation(value = "다이어리 수정")
     @PutMapping("/diary")
-    public ApiResponse updateDiary(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public ApiResponse updateDiary(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                    @ApiParam(value = "다이어리 정보", required = true) @RequestBody DiaryVO diaryVO) {
-        String loginId = userDto.getLoginId();
-        diaryVO.setLoginId(loginId);
+        String loginId = userVO.getLoginId();
+        diaryVO.setWriter(loginId);
 
         int updateCnt = diaryService.updateDiary(diaryVO);
 
@@ -93,12 +93,12 @@ public class DiaryController {
 
     @ApiOperation(value = "통계 조회", notes = "stdYear만 주어진 경우 월별 통계, stdMonth까지 주어진 경우, 해당 월의 일별 통계, stdDate까지 주어진 경우, 해당 일의 통계 조회")
     @GetMapping("/diary/statistics")
-    public List<StatisticsDto> getStatistics(@ApiIgnore @AuthenticationPrincipal UserDto userDto,
+    public List<StatisticsDto> getStatistics(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                                              @ApiParam(value = "기준년도", required = true, example = "2020") @RequestParam String stdYear,
                                              @ApiParam(value = "기준월", required = false, example = "08") @RequestParam(required = false) String stdMonth,
                                              @ApiParam(value = "기준일", required = false, example = "23") @RequestParam(required = false) String stdDate) {
 
-        String loginId = userDto.getLoginId();
+        String loginId = userVO.getLoginId();
 
         return diaryService.getStatistics(loginId, stdYear, stdMonth, stdDate);
     }

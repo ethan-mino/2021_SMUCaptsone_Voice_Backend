@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.smu.urvoice.mapper.chat.ChatMapper">
+    <resultMap id="getChatBotDetail" type="com.smu.urvoice.dto.chat.ChatBotDetailDto">
+        <id property="id" column="ID"/>
+        <result property="owner" column="OWNER"/>
+        <result property="name" column="CHAT_BOT_NAME"/>
+
+        <association property="chatMode" javaType="com.smu.urvoice.vo.chat.ChatModeVO">
+            <result property="id" column="MODE_ID"/>
+            <result property="name" column="MODE_NAME"/>
+        </association>
+
+        <association property="voice" javaType="com.smu.urvoice.vo.chat.VoiceVO">
+            <result property="id" column="VOICE_ID"/>
+            <result property="name" column="VOICE_NAME"/>
+        </association>
+
+        <association property="imageFile" javaType="com.smu.urvoice.vo.FileVO">
+            <result property="id" column="IMAGE_FILE_ID"/>
+            <result property="filePath" column="IMAGE_FILE_PATH"/>
+            <result property="contentType" column="IMAGE_CONTENT_TYPE"/>
+            <result property="owner" column="IMAGE_OWNER"/>
+            <result property="url" column="IMAGE_URL"/>
+        </association>
+    </resultMap>
+
+    <select id = "getChatBotByUser" resultMap="getChatBotDetail">
+        SELECT cb.id, cb.owner, cb.name AS `CHAT_BOT_NAME`,
+               cm.id AS `MODE_ID`, cm.name AS `MODE_NAME`,
+               v.id AS `VOICE_ID`, v.name AS `VOICE_NAME`,
+               f.id AS `IMAGE_FILE_ID`, f.file_path AS `IMAGE_FILE_PATH`, f.owner AS `IMAGE_OWNER`, f.content_type AS `IMAGE_CONTENT_TYPE`, f.url AS `IMAGE_URL`
+        FROM chat_bot cb JOIN chat_mode cm on cb.mode_id = cm.id
+        LEFT JOIN voice v on cb.voice_id = v.id
+        LEFT JOIN file f on cb.image_file_id = f.id
+        WHERE cb.owner = #{owner}
+    </select>
+
+    <select id = "getChatBotById" resultMap="getChatBotDetail">
+        SELECT cb.id, cb.owner, cb.name AS `CHAT_BOT_NAME`,
+               cm.id AS `MODE_ID`, cm.name AS `MODE_NAME`,
+               v.id AS `VOICE_ID`, v.name AS `VOICE_NAME`,
+               f.id AS `IMAGE_FILE_ID`, f.file_path AS `IMAGE_FILE_PATH`, f.owner AS `IMAGE_OWNER`, f.content_type AS `IMAGE_CONTENT_TYPE`, f.url AS `IMAGE_URL`
+        FROM chat_bot cb JOIN chat_mode cm on cb.mode_id = cm.id
+                         LEFT JOIN voice v on cb.voice_id = v.id
+                         LEFT JOIN file f on cb.image_file_id = f.id
+        WHERE cb.owner = #{owner} AND cb.id = #{chatBotId}
+    </select>
+
+    <select id="getLastChatByBotId" resultType="java.lang.String">
+        SELECT  text
+        FROM chat
+        WHERE bot_id = #{chatBotId} AND owner = #{owner}
+        ORDER BY create_date DESC LIMIT 1
+    </select>
+
+    <select id="getChatByBotId" resultType="com.smu.urvoice.dto.chat.ChatDetailDto">
+        SELECT id, bot_id AS `chat_bot_id`, text, IF(is_bot , 'true', 'false') as `is_bot`, create_date, owner
+        FROM chat
+        WHERE bot_id = #{chatBotId} AND owner = #{owner}
+        ORDER BY create_date
+    </select>
+
+    <insert id="insertChat">
+        INSERT INTO chat(bot_id, text, is_bot, create_date, owner)
+        VALUES(#{botId}, #{text}, #{isBot}, NOW(), #{owner})
+    </insert>
+
+    <insert id="insertChatBot">
+        INSERT INTO chat_bot(mode_id, voice_id, owner, image_file_id, name)
+        VALUES (#{modeId}, #{voiceId}, #{owner}, #{imageFileId}, #{name})
+    </insert>
+
+    <delete id="deleteChatBotById">
+        DELETE FROM chat_bot
+        WHERE id = #{chatBotId} AND owner = #{owner}
+    </delete>
+
+    <select id = "getVoiceByUser" resultType="com.smu.urvoice.vo.chat.VoiceVO">
+        SELECT id, name, owner
+        FROM voice
+        WHERE owner = #{owner}
+    </select>
+
+    <insert id="insertVoice">
+        INSERT INTO voice(name, owner)
+        VALUES (#{name}, #{owner})
+    </insert>
+
+    <delete id="deleteVoiceById">
+        DELETE FROM voice
+        WHERE id = #{voiceId} AND owner = #{owner}
+    </delete>
+
+    <select id="getChatModes" resultType="com.smu.urvoice.vo.chat.ChatModeVO">
+        SELECT id, name
+        FROM chat_mode
+    </select>
+</mapper>

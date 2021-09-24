@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container cand-frame text-center">
+  <form method="post" action="/transfer">
+    {% csrf_token %}
+    <p>입력문장</p>
+    {{ form.input_text }}
+    <p>출력문장</p>
+    <textarea name="result_text" rows="5" cols="80" disabled="true">{{ result.result_text }}</textarea>
+    {{ form.errors }}
+    <p>&nbsp;</p>
+    <button type="submit" class="btn btn-primary">어체 변환</button>
+  </form>
+
+</div>
+
+{% endblock %}

@@ -3,7 +3,7 @@ package com.smu.urvoice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.smu.urvoice.config.security.JwtProperties;
-import com.smu.urvoice.dto.user.UserDto;
+import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.service.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,7 +58,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .getSubject();
 
             if(username != null) {
-                UserDto user = userService.getUserByLoginId(username);
+                UserVO user = userService.getUserByLoginId(username);
 
                 if (user == null)
                     throw new UsernameNotFoundException("JWT 토큰 ERROR");

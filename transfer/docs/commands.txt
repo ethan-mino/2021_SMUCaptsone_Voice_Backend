@@ -1,0 +1,162 @@
+python make_vocab.py < train.txt > vocab.txt
+
+# chars level (yo -> sho)
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_yo_sho.test
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=yo \
+--tgt=sho \
+--vocab_prefix=$DATA_DIR/chars.vocab \
+--train_prefix=$DATA_DIR/train.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars_yo_sho.json
+
+
+## inference
+
+python -m nmt.nmt \
+--out_dir=$MODEL_DIR \
+--inference_input_file=$DATA_DIR/test.chars.yo \
+--inference_output_file=/tmp/test.chars.yo
+
+================================================================
+
+# chars level (sho -> yo)
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_sho_yo
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=sho \
+--tgt=yo \
+--vocab_prefix=$DATA_DIR/chars_vocab \
+--train_prefix=$DATA_DIR/train.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars_sho_yo.json
+
+==================================================================
+
+# last morph chars level
+
+export PRJ_DIR=/home/hkh/sources/adc-style-transfer
+export DATA_DIR=$PRJ_DIR/data/morphs
+export MODEL_DIR=$PRJ_DIR/models/morph_chars
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=src \
+--tgt=tgt \
+--vocab_prefix=$DATA_DIR/morph_chars_vocab \
+--train_prefix=$DATA_DIR/train.morph_chars \
+--dev_prefix=$DATA_DIR/dev.morph_chars \
+--test_prefix=$DATA_DIR/test.morph_chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/morph_chars.json
+
+
+# last word chars level (reverse model)
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/reverse_char_baseline
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=tgt \
+--tgt=src \
+--vocab_prefix=$DATA_DIR/chars_vocab \
+--train_prefix=$DATA_DIR/train.last_chars \
+--dev_prefix=$DATA_DIR/dev.last_chars \
+--test_prefix=$DATA_DIR/test.last_chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/reverse_chars_baseline.json
+
+
+# chars level (yo -> sho)
+# 해요체 -> 합쇼체
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_yo_sho_full
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=yo \
+--tgt=sho \
+--vocab_prefix=$DATA_DIR/chars_close.vocab \
+--train_prefix=$DATA_DIR/train_close.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars_yo_sho.close.json
+
+
+# chars level (sho -> yo)
+# 합쇼체 -> 해요체
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_sho_yo_full
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=sho \
+--tgt=yo \
+--vocab_prefix=$DATA_DIR/chars_close.vocab \
+--train_prefix=$DATA_DIR/train_close.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars.close.json
+
+
+=========================================================
+=========================================================
+
+# chars level (yo -> ban)
+# 해요체 -> 반말체
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_yo_ban
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=yo \
+--tgt=ban \
+--vocab_prefix=$DATA_DIR/chars_close.vocab \
+--train_prefix=$DATA_DIR/train_close.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars.close.json
+
+=========================================================
+
+# chars level (ban -> yo)
+# 반말체 -> 해요체
+
+export PRJ_DIR=/home/hkh/sources/adc-chatbot
+export DATA_DIR=$PRJ_DIR/data/chars
+export MODEL_DIR=$PRJ_DIR/models/char_ban_yo
+export HPARAM_DIR=$PRJ_DIR/hparams
+
+python -m nmt.nmt \
+--src=ban \
+--tgt=yo \
+--vocab_prefix=$DATA_DIR/chars_close.vocab \
+--train_prefix=$DATA_DIR/train_close.chars \
+--dev_prefix=$DATA_DIR/dev.chars \
+--test_prefix=$DATA_DIR/test.chars \
+--out_dir=$MODEL_DIR \
+--hparams_path=$HPARAM_DIR/chars.close.json

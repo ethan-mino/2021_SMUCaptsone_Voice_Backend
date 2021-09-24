@@ -2,7 +2,7 @@ package com.smu.urvoice.mapper.diary;
 
 import com.smu.urvoice.dto.diary.EmojiCategoryDetailDto;
 import com.smu.urvoice.dto.diary.EmojiDetailDto;
-import com.smu.urvoice.vo.EmojiCategoryVO;
+import com.smu.urvoice.vo.diary.EmojiCategoryVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

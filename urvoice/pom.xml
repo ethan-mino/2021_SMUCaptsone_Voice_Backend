@@ -14,7 +14,6 @@
     <packaging>war</packaging>
     <name>urvoice</name>
     <description>urvoice</description>
-
     <properties>
         <spring.version>5.2.2.RELEASE</spring.version>
         <poi.version>3.17</poi.version>
@@ -22,6 +21,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

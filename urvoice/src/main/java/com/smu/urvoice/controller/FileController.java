@@ -1,6 +1,6 @@
 package com.smu.urvoice.controller;
 
-import com.smu.urvoice.dto.user.UserDto;
+import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.service.file.FileService;
 import com.smu.urvoice.vo.FileVO;
 import io.swagger.annotations.Api;
@@ -28,8 +28,8 @@ public class FileController {
     @GetMapping("/download")
     public void fileDownload(@ApiParam(value = "파일 id", required = true, example = "1") @RequestParam("fileId") int fileId,
                              @ApiIgnore HttpServletResponse response,
-                             @ApiIgnore @AuthenticationPrincipal UserDto userDto){
-        String loginId = userDto.getLoginId(); // 유저의 회사명
+                             @ApiIgnore @AuthenticationPrincipal UserVO userVO){
+        String loginId = userVO.getLoginId(); // 유저의 회사명
 
         FileVO fileInfoVo = fileService.getFileInfoById(loginId, fileId);   // fileId로 파일 정보 조회
 

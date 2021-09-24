@@ -2,14 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smu.urvoice.mapper.user.UserMapper">
 
- 	<select id="getUser" resultType="com.smu.urvoice.dto.user.UserDto">
-        SELECT login_id, password
-        from user
+    <resultMap id="getUserDetail" type="com.smu.urvoice.dto.user.UserDetailDto">
+        <id property="loginId" column="LOGIN_ID"/>
+        <result property="password" column="PASSWORD"/>
+
+        <association property="imageFile" javaType="com.smu.urvoice.vo.FileVO">
+            <result property="id" column="IMAGE_FILE_ID"/>
+            <result property="filePath" column="IMAGE_FILE_PATH"/>
+            <result property="contentType" column="IMAGE_CONTENT_TYPE"/>
+            <result property="owner" column="IMAGE_OWNER"/>
+            <result property="url" column="IMAGE_URL"/>
+        </association>
+    </resultMap>
+
+    <select id="getUserDetailByLoginId" resultMap="getUserDetail">
+        SELECT login_id, password, image_file_id,
+               id AS `IMAGE_FILE_ID`, file_path AS `IMAGE_FILE_PATH`, owner AS `IMAGE_OWNER`, content_type AS `IMAGE_CONTENT_TYPE`, url AS `IMAGE_URL`
+        FROM user LEFT JOIN file f on f.id = user.image_file_id
+        WHERE login_id = #{loginId};
+    </select>
+
+ 	<select id="getUserByLoginId" resultType="com.smu.urvoice.vo.user.UserVO">
+        SELECT login_id, password, image_file_id
+        FROM user
         WHERE login_id = #{loginId};
     </select>
     
-     <insert id="insertUser" parameterType="com.smu.urvoice.dto.user.UserDto" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (login_id, password)
-        VALUES(#{loginId}, #{password})
+     <insert id="insertUser" parameterType="com.smu.urvoice.vo.user.UserVO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (login_id, password, image_file_id)
+        VALUES(#{loginId}, #{password}, #{imageFileId})
      </insert>
 </mapper>

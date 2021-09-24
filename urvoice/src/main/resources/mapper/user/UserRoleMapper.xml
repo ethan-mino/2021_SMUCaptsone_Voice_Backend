@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smu.urvoice.mapper.user.UserRoleMapper">
-	<select id="getRolesById" resultType="com.smu.urvoice.dto.user.UserRoleDto">
+	<select id="getRolesById" resultType="com.smu.urvoice.vo.user.UserRoleVO">
 		SELECT ur.login_id, ur.role_name
 		FROM user_role ur JOIN `user` u ON ur.login_id = u.login_id
 		WHERE u.login_id = #{loginId}
 	</select>
 
-	<insert id = "insertUserRole" parameterType="com.smu.urvoice.dto.user.UserRoleDto">
+	<insert id = "insertUserRole" parameterType="com.smu.urvoice.vo.user.UserRoleVO">
 		INSERT INTO `user_role`(login_id, role_name)
 		VALUES(#{loginId}, #{roleName});
 	</insert>
