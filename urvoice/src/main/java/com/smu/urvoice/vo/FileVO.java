@@ -1,15 +1,13 @@
 package com.smu.urvoice.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties({"owner", "filePath"})
 public class FileVO {
     private int id;
