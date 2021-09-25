@@ -1,17 +1,14 @@
 package com.smu.urvoice.controller;
 
 import com.smu.urvoice.dto.ApiResponse;
-import com.smu.urvoice.dto.user.UserDetailDto;
 import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "Authentication", description = "REST API for Authentication", tags = {"Authentication"})
 @RestController
@@ -32,14 +29,6 @@ public class UserController {
         return (validation) ? new ApiResponse(false, "") : new ApiResponse(true, USERNAME_ALREADY_EXIST);
     }
 
-    @ApiOperation(value = "유저 정보 확인", tags = {"Authentication"})
-    @GetMapping("/user")
-    public UserDetailDto getUserInfo(@ApiIgnore @AuthenticationPrincipal UserVO userVO){
-        String loginId = userVO.getLoginId();
-
-        return userService.getUserDetailByLoginId(loginId);
-    }
-    
     @ApiOperation(value = "회원가입", tags = {"Authentication"})
     @PostMapping("/signUp")
     public ApiResponse signUp(@ApiParam(value = "로그인 정보", required = true) @RequestBody UserVO userVO){

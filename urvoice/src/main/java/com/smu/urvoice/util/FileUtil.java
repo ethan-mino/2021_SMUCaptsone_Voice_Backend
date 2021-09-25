@@ -2,6 +2,7 @@ package com.smu.urvoice.util;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -90,5 +91,15 @@ public class FileUtil {
         }
 
         return remove;
+    }
+
+    public static String saveFile(MultipartFile multipartFile, String downloadPath) throws Exception{
+        String oringinalFilename = multipartFile.getOriginalFilename();
+        String savePath = downloadPath + "/" + oringinalFilename;
+
+        File convFile = new File(savePath);
+        multipartFile.transferTo(convFile);
+
+        return savePath;
     }
 }

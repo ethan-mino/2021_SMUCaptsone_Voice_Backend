@@ -1,5 +1,6 @@
 package com.smu.urvoice.controller;
 
+import com.smu.urvoice.util.FileUtil;
 import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.service.file.FileService;
 import com.smu.urvoice.vo.FileVO;
@@ -15,8 +16,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static com.smu.urvoice.util.FileUtil.removeFile;
-import static com.smu.urvoice.util.FileUtil.sendFile;
+import static com.smu.urvoice.util.FileUtil.*;
 
 @Api(value = "File API", description = "REST API for Diary", tags = {"File"})
 @RestController
@@ -24,7 +24,9 @@ public class FileController {
     @Autowired
     FileService fileService;
 
-    @ApiOperation(value = "파일 다운로드", tags = {"File"})
+    private final String downloadPath = "/";
+
+    @ApiOperation(value = "파일 다운로드")
     @GetMapping("/download")
     public void fileDownload(@ApiParam(value = "파일 id", required = true, example = "1") @RequestParam("fileId") int fileId,
                              @ApiIgnore HttpServletResponse response,

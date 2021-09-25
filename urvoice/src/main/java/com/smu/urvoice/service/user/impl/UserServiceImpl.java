@@ -3,7 +3,6 @@ package com.smu.urvoice.service.user.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.smu.urvoice.dto.user.UserDetailDto;
 import com.smu.urvoice.vo.user.UserVO;
 import com.smu.urvoice.vo.user.UserRoleVO;
 import com.smu.urvoice.mapper.user.UserMapper;
@@ -44,11 +43,6 @@ public class UserServiceImpl implements UserService {
 		UserRoleVO userRoleVO = new UserRoleVO(loginId, "ROLE_USER");
 
 		return userRoleMapper.insertUserRole(userRoleVO);
-	}
-
-	@Override
-	public UserDetailDto getUserDetailByLoginId(String loginId) {
-		return userMapper.getUserDetailByLoginId(loginId);
 	}
 
 	@Override

@@ -15,13 +15,6 @@
         </association>
     </resultMap>
 
-    <select id="getUserDetailByLoginId" resultMap="getUserDetail">
-        SELECT login_id, password, image_file_id,
-               id AS `IMAGE_FILE_ID`, file_path AS `IMAGE_FILE_PATH`, owner AS `IMAGE_OWNER`, content_type AS `IMAGE_CONTENT_TYPE`, url AS `IMAGE_URL`
-        FROM user LEFT JOIN file f on f.id = user.image_file_id
-        WHERE login_id = #{loginId};
-    </select>
-
  	<select id="getUserByLoginId" resultType="com.smu.urvoice.vo.user.UserVO">
         SELECT login_id, password, image_file_id
         FROM user

@@ -86,7 +86,7 @@ public class ChatController {
     }
     
     @ApiOperation(value = "메시지 생성")
-    @PutMapping("/chat")
+    @PostMapping("/chat")
     public ApiResponse insertChat(@ApiIgnore @AuthenticationPrincipal UserVO userVO,
                           @RequestBody ChatVO chatVO) {
         String owner = userVO.getLoginId();
