@@ -15,7 +15,7 @@
 
     <insert id = "insertFileInfo" parameterType="com.smu.urvoice.vo.FileVO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO file (file_path, owner, content_type, url)
-        VALUES(#{filePath}, #{owner}, #{contentType}, ${url})
+        VALUES(#{filePath}, #{owner}, #{contentType}, #{url})
     </insert>
 
     <delete id = "deleteFileInfoById" parameterType="com.smu.urvoice.vo.FileVO">

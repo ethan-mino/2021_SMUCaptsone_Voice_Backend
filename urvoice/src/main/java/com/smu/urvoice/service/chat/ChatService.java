@@ -17,7 +17,7 @@ public interface ChatService {
 
     List<ChatBotDetailDto> getChatBotByUser(String owner);
     ChatBotDetailDto getChatBotById(String owner, int chatBotId);
-    int insertChatBot(ChatBotVO chatBotVO);
+    int insertChatBot(ChatBotVO chatBotVO) throws Exception;
     int deleteChatBotById(String owner, int chatBotId);
 
     List<VoiceVO> getVoiceByUser(String owner);

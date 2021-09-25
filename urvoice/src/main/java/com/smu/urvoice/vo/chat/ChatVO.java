@@ -16,6 +16,15 @@ public class ChatVO {
     private int id;
     private int botId;
     private String text;
+
+    public ChatVO(int botId, String text, int isBot, Date createDate, String owner) {
+        this.botId = botId;
+        this.text = text;
+        this.isBot = isBot;
+        this.createDate = createDate;
+        this.owner = owner;
+    }
+
     private int isBot;
     private Date createDate;
 

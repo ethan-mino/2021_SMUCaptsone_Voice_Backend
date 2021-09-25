@@ -41,3 +41,6 @@ myenv/
 #model checkpoint
 data/
 transfer/models/
+
+#data
+resources/

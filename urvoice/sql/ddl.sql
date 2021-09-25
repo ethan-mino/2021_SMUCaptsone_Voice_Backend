@@ -1,7 +1,6 @@
 CREATE TABLE `user` (
   `login_id` VARCHAR(100) NOT NULL COMMENT 'login id',
   `password` VARCHAR(255) NOT NULL COMMENT '암호회된 password',
-  
   PRIMARY KEY (`login_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   
@@ -39,7 +38,7 @@ CREATE TABLE diary
     `id`           INT             NOT NULL    AUTO_INCREMENT, 
     `content`      TEXT            NULL, 
     `emoji_id`     INT             NOT NULL, 
-    `owner`     VARCHAR(100)       NOT NULL, 
+    `writer`     VARCHAR(100)       NOT NULL,
     `create_date`  DATETIME        NOT NULL, 
      PRIMARY KEY (`id`),
      FOREIGN KEY (`writer`) REFERENCES `user` (`login_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -50,9 +49,9 @@ CREATE TABLE diary
 CREATE TABLE file
 (
     `id`     INT             	  NOT NULL    AUTO_INCREMENT, 
-    `file_path`   VARCHAR(100)    NOT NULL, 
+    `file_path`   TEXT    NOT NULL, 
     `owner`  	  VARCHAR(100)    NOT NULL, 
-	`content_type` varchar(50) 	  NOT NULL,
+	`content_type` varchar(255) 	  NOT NULL,
     `url` 		  TEXT            NULL,
      PRIMARY KEY (`id`),
      FOREIGN KEY (`owner`) REFERENCES user (`login_id`) ON DELETE CASCADE ON UPDATE CASCADE

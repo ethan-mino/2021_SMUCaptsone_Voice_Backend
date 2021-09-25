@@ -15,4 +15,11 @@ public class FileVO {
     private String contentType;
     private String owner;
     private String url;
+
+    public FileVO(String filePath, String contentType, String owner, String url) {
+        this.filePath = filePath;
+        this.contentType = contentType;
+        this.owner = owner;
+        this.url = url;
+    }
 }
