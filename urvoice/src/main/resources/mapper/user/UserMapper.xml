@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smu.urvoice.mapper.user.UserMapper">
-
-    <resultMap id="getUserDetail" type="com.smu.urvoice.dto.user.UserDetailDto">
-        <id property="loginId" column="LOGIN_ID"/>
-        <result property="password" column="PASSWORD"/>
-
-        <association property="imageFile" javaType="com.smu.urvoice.vo.FileVO">
-            <result property="id" column="IMAGE_FILE_ID"/>
-            <result property="filePath" column="IMAGE_FILE_PATH"/>
-            <result property="contentType" column="IMAGE_CONTENT_TYPE"/>
-            <result property="owner" column="IMAGE_OWNER"/>
-            <result property="url" column="IMAGE_URL"/>
-        </association>
-    </resultMap>
-
  	<select id="getUserByLoginId" resultType="com.smu.urvoice.vo.user.UserVO">
-        SELECT login_id, password, image_file_id
+        SELECT login_id, password
         FROM user
         WHERE login_id = #{loginId};
     </select>
     
      <insert id="insertUser" parameterType="com.smu.urvoice.vo.user.UserVO" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (login_id, password, image_file_id)
-        VALUES(#{loginId}, #{password}, #{imageFileId})
+        INSERT INTO user (login_id, password)
+        VALUES(#{loginId}, #{password})
      </insert>
 </mapper>
