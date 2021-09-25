@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 		return (userVO == null);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public int createUser(UserVO userVO) {
 		userMapper.insertUser(userVO);
 		String loginId = userVO.getLoginId();
@@ -46,11 +46,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public UserVO getUserByLoginId(String loginId) {
 		return userMapper.getUserByLoginId(loginId);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<UserRoleVO> getUserRoles(String loginId) {
 		List<UserRoleVO> userRoleVOS = userRoleMapper.getRolesById(loginId);
 		List<UserRoleVO> list = new ArrayList<>();

@@ -9,6 +9,7 @@ import com.smu.urvoice.service.Diary.EmojiService;
 import com.smu.urvoice.vo.diary.DiaryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,15 +24,19 @@ public class DiaryServiceImpl implements DiaryService {
     EmojiService emojiService;
 
     @Override
+    @Transactional
     public int insertDiary(DiaryVO diaryVO) {
         return diaryMapper.insertDiary(diaryVO);
     }
 
     @Override
+    @Transactional
     public int deleteDiaryById(String writer, int diaryId) {
         return diaryMapper.deleteDiaryById(writer, diaryId);
     }
+
     @Override
+    @Transactional
     public int updateDiary(DiaryVO diaryVO){
         return diaryMapper.updateDiary(diaryVO);
     }
@@ -51,6 +56,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DiaryDetailDto getDiaryById(String writer, int diaryId) {
         DiaryVO diaryVo = diaryMapper.getDiaryById(writer, diaryId);
         if (diaryVo != null){
@@ -69,6 +75,7 @@ public class DiaryServiceImpl implements DiaryService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<StatisticsDto> getStatistics(String writer, String stdYear, String stdMonth, String stdDate){
         List<StatisticsDto> statisticsDtoList = null;
         String searchType = "";

@@ -67,7 +67,7 @@
         VALUES(#{botId}, #{text}, #{isBot}, NOW(), #{owner})
     </insert>
 
-    <insert id="insertChatBot">
+    <insert id="insertChatBot" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO chat_bot(mode_id, voice_id, owner, image_file_id, name)
         VALUES (#{modeId}, #{voiceId}, #{owner}, #{imageFileId}, #{name})
     </insert>
