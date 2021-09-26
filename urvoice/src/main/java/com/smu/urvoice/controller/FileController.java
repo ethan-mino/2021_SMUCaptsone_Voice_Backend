@@ -45,7 +45,7 @@ public class FileController {
         String originalFilename = multipartFile.getOriginalFilename();
         String contentType = multipartFile.getContentType();
 
-        String now = dateToString(new Date(), "YYYY-MM-dd");
+        String now = dateToString(new Date(), "YYYY-MM-dd HH:mm:ss");
         String newFilename = now + "_" +originalFilename;
 
         String savePath = uploadPath + "/" + newFilename;
