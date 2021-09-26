@@ -59,7 +59,7 @@ public class FileController {
         if (insertCnt != 0){
             Map<String, Object> resultMap = new HashMap<>();
             int fileId = fileVO.getId();
-            resultMap.put("result", fileId);
+            resultMap.put("id", fileId);
             return new ApiResponse(false, "", resultMap);
         }
         else {

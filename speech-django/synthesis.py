@@ -2,15 +2,17 @@ import os
 import sys
 from pathlib import Path
 import g2pk
-g2p = g2pk.G2p()
-
 import re
 from unicodedata import normalize
 from TTS.utils.synthesizer import Synthesizer
 import wave
 from scipy.io.wavfile import write
 import numpy as np
+import wave
+import datetime
+from scipy.io.wavfile import write
 
+g2p = g2pk.G2p()
 
 def normalize_text(text):
     text = text.strip()
@@ -169,11 +171,8 @@ def normalize_multiline_text(long_text):
     return [text for text in normalized_texts if len(text) > 0]
 
 
-def synthesize(tts_path, tts_config_path, vocoder_path, vocoder_config_path, sample_rate, sample_width, n_channel, text):
-    WAVE_DIR_PATH = ""
-
-    wavs = synthesizer.tts(text, None, None)
-    return wavs
+def synthesize(tts_path, tts_config_path, vocoder_path, vocoder_config_path, sample_rate, text):
+    WAVE_DIR_PATH = "/home/ubuntu/urvoice/2021_SMUCaptsone_Voice_Backend/speech-django/wavs"
 
     synthesizer = Synthesizer(tts_path, tts_config_path, None,
         vocoder_path, vocoder_config_path, None, None, False
@@ -181,11 +180,10 @@ def synthesize(tts_path, tts_config_path, vocoder_path, vocoder_config_path, sam
 
     symbols = synthesizer.tts_config.characters.characters
 
-    for idx, text in enumerate(normalize_multiline_text(texts)):
-        wav = synthesizer.tts(text, None, None)
-        
-        import wave
-        with wave.open("./audio{}.wav".format(idx), "wb") as audio :
-            audioObj = IPython.display.Audio(wav, rate=22050).data
-            audio.write(audioObj)
+    normalized_text = normalize_multiline_text(text)
+    wav = synthesizer.tts(text, None, None)
+    now = datetime.datetime.now()
 
+    audio_path = os.path.join(WAVE_DIR_PATH, "audio_{}.wav".format(WAVE_DIR_PATH, now))
+
+    write(audio_path, 22050, np.array(wav))
