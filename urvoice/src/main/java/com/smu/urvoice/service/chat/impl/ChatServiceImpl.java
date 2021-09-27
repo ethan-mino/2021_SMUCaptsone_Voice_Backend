@@ -8,6 +8,7 @@ import com.smu.urvoice.vo.chat.ChatBotVO;
 import com.smu.urvoice.vo.chat.ChatModeVO;
 import com.smu.urvoice.vo.chat.ChatVO;
 import com.smu.urvoice.vo.chat.VoiceVO;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,11 +95,27 @@ public class ChatServiceImpl implements ChatService {
             throw new Exception("Fail to create chatBot");
         }else{
            int chatBotId = chatBotVO.getId();
-           String WELCOME_MESSAGE = "안녕하세요.";
+           List<ChatModeVO> chatModeList = chatMapper.getChatModes();
+           String welcomeMessage = null;
+
+           for (ChatModeVO chatModeVO : chatModeList){
+               if (chatModeVO.getId() == chatBotVO.getModeId()) {
+                if(chatModeVO.getName().equals("informal")){
+                    welcomeMessage = "안녕.";
+                }else{
+                    welcomeMessage = "안녕하세요.";
+                }
+               }
+           }
+
+           if (welcomeMessage == null){
+               throw new Exception();
+           }
+
            String owner = chatBotVO.getOwner();
            Date now = new Date();
            System.out.println(chatBotId);
-           ChatVO chatVO = new ChatVO(chatBotId, WELCOME_MESSAGE, 1, now, owner);
+           ChatVO chatVO = new ChatVO(chatBotId, welcomeMessage, 1, now, owner);
            chatMapper.insertChat(chatVO);
         }
 

@@ -29,7 +29,7 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-    final String NLP_SERVER_URL = "http://0.tcp.jp.ngrok.io:17256/chat/";
+    final String NLP_SERVER_URL = "http://0.tcp.jp.ngrok.io:18529/chat/";
     final String TRANSFER_SERVER_URL = "http://0.tcp.jp.ngrok.io:11936/tf/";
 
     @ApiOperation(value = "어체 조회")
@@ -119,6 +119,8 @@ public class ChatController {
 
         param.put("inputText", answer);
         param.put("modeId", modeId);
+
+        System.out.println(answer);
 
         Map transferResponse = sendRequest("GET", TRANSFER_SERVER_URL, param);
         String transferedAnswer = jsonToMap(transferResponse.get("result").toString()).get("response").toString();
